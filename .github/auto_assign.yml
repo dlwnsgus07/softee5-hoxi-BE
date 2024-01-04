@@ -1,0 +1,12 @@
+addReviewers: true
+
+addAssignees: author
+
+reviewers:
+  - dlwnsgus07
+  - jomulagy
+
+skipKeywords:
+  - wip
+
+numberOfReviewers: 0
