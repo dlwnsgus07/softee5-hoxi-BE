@@ -15,14 +15,16 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
     generate-ddl: true
----
+
+
 spring:
   profiles:
     active: local
     group:
-      local: "local, aws"
----
+      local: "local, s3"
+
 
