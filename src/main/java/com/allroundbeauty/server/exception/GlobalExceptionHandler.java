@@ -35,7 +35,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotAcceptedException.class)
     private ResponseEntity<ErrorResponse> handleNotAcceptedException(Exception e) {
         log.error(e.getMessage());
-        return ResponseEntity.internalServerError().body(new ErrorResponse(NOT_ACCEPTABLE, e.getMessage()));
+        return ResponseEntity.status(NOT_ACCEPTABLE).body(new ErrorResponse(NOT_ACCEPTABLE, e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
