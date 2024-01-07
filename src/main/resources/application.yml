@@ -20,8 +20,6 @@ spring:
       ddl-auto: create
     generate-ddl: true
 
-
-spring:
   profiles:
     active: local
     group:
