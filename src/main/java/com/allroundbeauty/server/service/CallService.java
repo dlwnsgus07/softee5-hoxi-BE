@@ -1,10 +1,16 @@
 package com.allroundbeauty.server.service;
 
 import com.allroundbeauty.server.domain.Call;
+import com.allroundbeauty.server.domain.user.Driver;
 import com.allroundbeauty.server.dto.CallDTO;
 import com.allroundbeauty.server.dto.CallDetailDTO;
+import com.allroundbeauty.server.dto.DriverAcceptRequestDTO;
+import com.allroundbeauty.server.dto.DriverAcceptResponseDTO;
+import com.allroundbeauty.server.exception.AlreadyAcceptedException;
 import com.allroundbeauty.server.exception.BadRequestException;
 import com.allroundbeauty.server.repository.CallRepository;
+import com.allroundbeauty.server.repository.DriverRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CallService {
     private final CallRepository callRepository;
+    private final DriverRepository driverRepository;
+
     public List<CallDTO> getCallList() {
         List<Call> calls = callRepository.findAll();
         return calls.stream().map(call -> {
@@ -30,6 +38,7 @@ public class CallService {
                 })
                 .toList();
     }
+
     private String convertArrivalTime(LocalDateTime arrivalTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a hh:mm");
 
@@ -44,16 +53,34 @@ public class CallService {
         Call call = callRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("존재하지 않는 콜입니다."));
         return CallDetailDTO.builder()
-                    .id(call.getId())
-                    .reservation(call.getReservation())
-                    .source(call.getSource())
-                    .destination(call.getDestination())
-                    .requirement(call.getRequirement())
-                    .distance(call.getDistance())
-                    .arrivalTime(convertArrivalTime(call.getArrivalTime()))
-                    .carrier(call.getCarrierNum())
-                    .isCargo(call.isCargo())
-                    .deliveryFee(call.getDeliveryFee())
-                    .build();
+                .id(call.getId())
+                .reservation(call.getReservation())
+                .source(call.getSource())
+                .destination(call.getDestination())
+                .requirement(call.getRequirement())
+                .distance(call.getDistance())
+                .arrivalTime(convertArrivalTime(call.getArrivalTime()))
+                .carrier(call.getCarrierNum())
+                .isCargo(call.isCargo())
+                .deliveryFee(call.getDeliveryFee())
+                .build();
     }
+
+    @Transactional
+    public DriverAcceptResponseDTO accept(DriverAcceptRequestDTO acceptRequestDTO) {
+        Call call = callRepository.findById(acceptRequestDTO.getCallId())
+                .orElseThrow(() -> new BadRequestException("Bad Request"));
+        Driver driver = driverRepository.findById(acceptRequestDTO.getUserId())
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
+        if (call.getDriver() != null) {
+            throw new AlreadyAcceptedException("이미 배차된 콜입니다.");
+        }
+        call.setDriver(driver);
+        call.setPosition_x(acceptRequestDTO.getPositionX());
+        call.setPosition_y(acceptRequestDTO.getPositionY());
+        return DriverAcceptResponseDTO.builder()
+                .arrivalTime(call.getArrivalTime())
+                .build();
+    }
+
 }
