@@ -8,10 +8,20 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@DiscriminatorValue("customer")
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Customer extends User{
+@ToString(of = {"id", "name", "phoneNumber"})
+public class Customer{
+    @Id @GeneratedValue
+    @Column(name = "customer_id")
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     List<Destination> destinations = new ArrayList<Destination>();
 
