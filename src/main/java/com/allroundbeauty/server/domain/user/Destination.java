@@ -1,15 +1,15 @@
 package com.allroundbeauty.server.domain.user;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "name", "customer"})
 public class Destination {
-    @Id
-    @GeneratedValue
-    @Column(name = "category_id")
+    @Id @GeneratedValue()
+    @Column(name = "destination_id")
     private Long id;
 
     @Column(nullable = false)
