@@ -1,21 +1,21 @@
 package com.allroundbeauty.server.dto;
 
-import com.allroundbeauty.server.domain.Reservation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 public class CallDetailDTO {
     private Long id;
-    private Reservation reservation;
+    private ReservationDTO reservation;
     private String source;
     private String destination;
     private String requirement;
     private double distance;
     private String arrivalTime;
     private int carrier;
+    @JsonProperty(value = "isCargo")
     private boolean isCargo;
     private int deliveryFee;
 }
