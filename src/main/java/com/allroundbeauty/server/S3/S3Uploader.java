@@ -74,4 +74,7 @@ public class S3Uploader {
         return String.valueOf(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
     }
 
+    public String getFullImagePath(String dirName, String fileName){
+        return amazonS3Client.getUrl(bucket, dirName + "/" + fileName).toString();
+    }
 }

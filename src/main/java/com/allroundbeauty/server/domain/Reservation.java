@@ -1,5 +1,6 @@
 package com.allroundbeauty.server.domain;
 
+import com.allroundbeauty.server.vo.ReservationVo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,4 +16,6 @@ public class Reservation {
     private String name;
     private String phoneNumber;
     private String hotelNumber;
+
+
 }

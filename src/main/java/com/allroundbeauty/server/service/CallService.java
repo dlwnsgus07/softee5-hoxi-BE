@@ -1,32 +1,65 @@
-package com.allroundbeauty.server.service;
-
-import com.allroundbeauty.server.domain.Call;
-import com.allroundbeauty.server.domain.State;
-import com.allroundbeauty.server.domain.user.Driver;
-import com.allroundbeauty.server.dto.*;
-import com.allroundbeauty.server.exception.AlreadyAcceptedException;
-import com.allroundbeauty.server.exception.BadRequestException;
-import com.allroundbeauty.server.repository.CallRepository;
-import com.allroundbeauty.server.repository.DriverRepository;
-import com.allroundbeauty.server.repository.S3Repository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class CallService {
+    private final CustomerRepository customerRepository;
     private final CallRepository callRepository;
-    private final DriverRepository driverRepository;
+    private final ReservationRepository reservationRepository;
+    private final S3Uploader s3Uploader;
     private final S3Repository s3Repository;
-
+    private final DriverRepository driverRepository;
+    public Long findDriverIdByCallId(Long callId) {
+        return  callRepository.findById(callId)
+                .orElseThrow(()->new BadRequestException("Bad Request"))
+                .getDriver().getId();
+    }
+    public DriverPositionDto findDriverPosition(Long id){
+        Call call = callRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Call not found with id: " + id));
+        if(call.getState() == State.PICKUP) {
+            try{
+                double pos_x = call.getPosition_x();
+                double pos_y = call.getPosition_y();
+                log.error("pos_x : "+pos_x + "pos_y : " +pos_y);
+                return new DriverPositionDto(call.getPosition_x(), call.getPosition_y());
+            }
+            catch (NullPointerException e){
+                log.info("call.id : " + call.getId());
+                throw new NotAcceptedException("위치정보를 불러올 수 없습니다.");
+            }
+        }
+        else{
+            throw new NotAcceptedException("배차되지 않은 콜입니다.");
+        }
+    }
+    public CallImageDto getCallImage(Long callId) {
+        Call call = callRepository.findById(callId).orElseThrow(()->new BadRequestException("존재하지 않는 호출 입니다."));
+        if(call.getState() != State.COMPLETE || call.getDeliveryImage() == null){
+            throw new NotAcceptedException("완료되지 않은 호출 입니다.");
+        }
+        String imagePath = s3Uploader.getFullImagePath("static",call.getDeliveryImage());
+        return new CallImageDto(imagePath);
+    }
+    @Transactional
+    public void updateCallState(Long id) {
+        Call call = callRepository.findById(id).orElseThrow(()->new BadRequestException("존재하지 않는 호출입니다."));
+        if(call.getState() == State.COMPLETE && call.getDeliveryImage() != null){
+            call.setState(State.FINISH);
+        }
+        else{
+            throw new BadRequestException("정상적이지 않은 호출입니다.");
+        }
+    }
+    @Transactional
+    public CallPlaceDto createCall(CallCreateVo callCreateVo) {
+        Reservation reservation = reservationRepository.save(callCreateVo.getReservation().voToEntity());
+        Call call = callRepository.save(callCreateVo.getCall().voToEntity());
+        Long customerId = callCreateVo.getUserId();
+        Customer customer = customerRepository.findById(customerId).orElseThrow(()->new BadRequestException("존재하지 않는 사용자 입니다."));
+        call.setReservation(reservation);
+        call.setCustomer(customer);
+        return new CallPlaceDto(call.getSource(),call.getDestination());
+    }
     public List<CallDTO> getCallList() {
         List<Call> calls = callRepository.findAll();
         List<Call> callsWithNullDriver = calls.stream()
@@ -45,18 +78,14 @@ public class CallService {
                 })
                 .toList();
     }
-
     private String convertArrivalTime(LocalDateTime arrivalTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a hh:mm");
 
         String convertDateTime = arrivalTime.format(formatter);
-
         convertDateTime = convertDateTime.replace("am", "AM").replace("pm", "PM");
         convertDateTime = convertDateTime.replace("오전", "AM").replace("오후", "PM");
-
         return convertDateTime;
     }
-
     public CallDetailDTO getCallDetail(Long id) {
         Call call = callRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("존재하지 않는 콜입니다."));
@@ -78,7 +107,6 @@ public class CallService {
                 .deliveryFee(call.getDeliveryFee())
                 .build();
     }
-
     @Transactional
     public DriverAcceptResponseDTO accept(DriverAcceptRequestDTO acceptRequestDTO) {
         Call call = callRepository.findById(acceptRequestDTO.getCallId())
@@ -96,7 +124,6 @@ public class CallService {
                 .arrivalTime(call.getArrivalTime())
                 .build();
     }
-
     @Transactional
     public void deliveryCompleted(Long id, MultipartFile image) {
         validateImageFile(image);
@@ -112,7 +139,6 @@ public class CallService {
                 })
                 .orElseThrow(() -> new BadRequestException("사용자가 존재하지 않습니다."));
     }
-
     private void validateImageFile(MultipartFile image) {
         String contentType = image.getContentType();
         if (contentType == null) {
@@ -124,7 +150,6 @@ public class CallService {
             throw new BadRequestException("image 형식이 아닙니다.");
         }
     }
-
     @Transactional
     public void pickUp(Long id) {
         Call call = callRepository.findById(id)
