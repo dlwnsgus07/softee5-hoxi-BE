@@ -89,7 +89,7 @@ public class CallService {
     public CallPlaceDto createCall(CallCreateVo callCreateVo) {
         Reservation reservation = reservationRepository.save(callCreateVo.getReservation().voToEntity());
         Call call = callRepository.save(callCreateVo.getCall().voToEntity());
-        Long customerId = callCreateVo.getUserId().getId();
+        Long customerId = callCreateVo.getUserId();
         Customer customer = customerRepository.findById(customerId).orElseThrow(()->new BadRequestException("존재하지 않는 사용자 입니다."));
         call.setReservation(reservation);
 

@@ -3,13 +3,16 @@ package com.allroundbeauty.server.vo;
 import com.allroundbeauty.server.domain.Call;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Data
 @AllArgsConstructor
+@Slf4j
 public class CallVo {
     private String source;
     private String destination;
@@ -19,11 +22,11 @@ public class CallVo {
     private int deliveryFee;
 
     private LocalDateTime convertArrivalTimeToDateTime(String string){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a hh:mm");
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a").withLocale(java.util.Locale.ENGLISH);;
+        log.info("string : " + string);
         // "AM 12:00"과 같은 형식에 맞춰 문자열을 LocalTime으로 파싱
         LocalTime localTime = LocalTime.parse(string, formatter);
-
+        log.info("localTIme : "+localTime);
         // 현재 날짜와 합쳐서 LocalDateTime으로 생성
         return LocalDateTime.of(LocalDateTime.now().toLocalDate(), localTime);
     }
