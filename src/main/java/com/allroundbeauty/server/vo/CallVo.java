@@ -1,6 +1,7 @@
 package com.allroundbeauty.server.vo;
 
 import com.allroundbeauty.server.domain.Call;
+import com.allroundbeauty.server.domain.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,9 @@ public class CallVo {
     private double distance;
     private String arrivalTime;
     private String requirement;
+    private int carrierNum;
     private int deliveryFee;
+    private boolean isCargo;
 
     private LocalDateTime convertArrivalTimeToDateTime(String string) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a hh:mm").withLocale(java.util.Locale.ENGLISH);
@@ -34,7 +37,16 @@ public class CallVo {
     }
 
     public Call voToEntity() {
-        return Call.builder().source(this.source).destination(this.destination).distance(this.distance)
-                .arrivalTime(convertArrivalTimeToDateTime(this.arrivalTime)).requirement(this.requirement).deliveryFee(this.deliveryFee).build();
+        return Call.builder()
+                .source(this.source)
+                .destination(this.destination)
+                .distance(this.distance)
+                .arrivalTime(convertArrivalTimeToDateTime(this.arrivalTime))
+                .requirement(this.requirement)
+                .deliveryFee(this.deliveryFee)
+                .carrierNum(this.carrierNum)
+                .isCargo(this.isCargo)
+                .state(State.WAIT)
+                .build();
     }
 }
