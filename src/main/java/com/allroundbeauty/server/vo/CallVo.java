@@ -22,7 +22,7 @@ public class CallVo {
     private int deliveryFee;
 
     private LocalDateTime convertArrivalTimeToDateTime(String string){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a").withLocale(java.util.Locale.ENGLISH);;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("a hh:mm").withLocale(java.util.Locale.ENGLISH);;
         log.info("string : " + string);
         // "AM 12:00"과 같은 형식에 맞춰 문자열을 LocalTime으로 파싱
         LocalTime localTime = LocalTime.parse(string, formatter);
