@@ -2,6 +2,7 @@ package com.allroundbeauty.server.vo;
 
 import com.allroundbeauty.server.domain.Call;
 import com.allroundbeauty.server.domain.State;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class CallVo {
     private String requirement;
     private int carrierNum;
     private int deliveryFee;
+    @JsonProperty("isCargo")
     private boolean isCargo;
 
     private LocalDateTime convertArrivalTimeToDateTime(String string) {
