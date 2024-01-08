@@ -25,13 +25,13 @@ public class DriverController {
         return callService.getCallList();
     }
 
-    @GetMapping("/api/calls/{id}")
-    public CallDetailDTO getCallDetail(@PathVariable Long id) {
+    @GetMapping("/api/call/{id}")
+    public CallDetailDTO getCallDetail(@PathVariable("id") Long id) {
         return callService.getCallDetail(id);
     }
 
     @PostMapping("/api/call/pickup/{id}")
-    private void pickUp(@PathVariable Long id) {
+    private void pickUp(@PathVariable("id") Long id) {
         callService.pickUp(id);
     }
 
@@ -41,7 +41,7 @@ public class DriverController {
     }
 
     @PostMapping("/api/call/complete/{id}")
-    private void deliveryCompleted(@PathVariable Long id, @RequestPart(value = "image", required = false) MultipartFile image) {
+    private void deliveryCompleted(@PathVariable("id") Long id, @RequestPart(value = "image", required = false) MultipartFile image) {
         if (image == null) {
             throw new BadRequestException("이미지 파일이 없습니다.");
         }

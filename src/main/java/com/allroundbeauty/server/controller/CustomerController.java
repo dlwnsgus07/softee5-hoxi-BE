@@ -1,4 +1,4 @@
-package com.allroundbeauty.server.controller;
+package com.allroundbeauty.server.Controller;
 
 import com.allroundbeauty.server.dto.CallImageDto;
 import com.allroundbeauty.server.dto.CallPlaceDto;
