@@ -1,6 +1,9 @@
 package com.allroundbeauty.server.util;
 
 import com.allroundbeauty.server.exception.ErrorResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -41,7 +42,10 @@ public class Call {
     private Reservation reservation;
     private boolean isCargo;
     @Column(nullable = true)
-    private double position_x;
+    private Double position_x;
     @Column(nullable = true)
-    private double position_y;
+    private Double position_y;
+
+
+
 }
