@@ -39,3 +39,7 @@ out/
 .env
 
 src/main/java/com/allroundbeauty/server/domain/Call.java
+
+application-s3.yml
+start_h2.sh
+h2-2.1.214.jar
