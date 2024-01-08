@@ -44,7 +44,7 @@ public class CallService {
     public DriverPositionDto findDriverPosition(Long id) {
         Call call = callRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Call not found with id: " + id));
-        if (call.getState() == State.PICKUP) {
+        if (call.getState() != State.WAIT) {
             try {
                 double pos_x = call.getPosition_x();
                 double pos_y = call.getPosition_y();

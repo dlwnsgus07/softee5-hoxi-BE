@@ -20,6 +20,8 @@ INSERT INTO reservation (name, phone_number, hotel_number)
 VALUES ('뉴진스', '123-4556-745', '431-34343-224');
 INSERT INTO reservation (name, phone_number, hotel_number)
 VALUES ('르세라핌', '13-247-45', '431-242-13');
+INSERT INTO reservation (name, phone_number, hotel_number)
+VALUES ('김미로', '13-247-45', '431-242-13');
 -- 콜 생성
 
 INSERT INTO call (customer_id, source, destination, arrival_Time, requirement, carrier_num, delivery_fee, distance,
@@ -34,3 +36,18 @@ VALUES (2, '서울', '강원도', '2016-09-30 18:20:30', '최대한 느리게 �
 INSERT INTO call (customer_id, source, destination, arrival_Time, requirement, carrier_num, delivery_fee, distance,
                   is_cargo, driver_id, position_x, position_y, state, reservation_id)
 VALUES (1, '부', '서', '2014-11-23 11:34:56', '오전나와라잉', 1, 1000, 10, true, null, null, null, 'WAIT', 4);
+INSERT INTO call (customer_id, source, destination, arrival_Time, requirement, carrier_num, delivery_fee, distance,
+                  is_cargo, driver_id, position_x, position_y, state, reservation_id, delivery_image)
+VALUES (1, '부', '서', '2014-11-23 11:34:56', '오전나와라잉', 1, 1000, 10, true, null, null, null, 'COMPLETE', 5, '계란라면.jpeg');
+
+--최근 목적지
+INSERT INTO destination (destination_id, customer_id, name)
+VALUES (1,1, '교대역');
+INSERT INTO destination (destination_id,customer_id, name)
+VALUES (2,1, '강남역');
+INSERT INTO destination (destination_id,customer_id, name)
+VALUES (3,1, '학동역');
+INSERT INTO destination (destination_id,customer_id, name)
+VALUES (4,2, '교대역');
+INSERT INTO destination (destination_id,customer_id, name)
+VALUES (5,2, '강남역');
