@@ -8,7 +8,7 @@ spring:
       maxRequestSize: 30MB
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test
+    url: jdbc:h2:tcp://localhost/home/ubuntu/softee5-hoxi-BE/test
     username: sa
     password:
   jpa:
