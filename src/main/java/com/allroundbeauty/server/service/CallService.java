@@ -158,13 +158,10 @@ public class CallService {
     }
 
     @Transactional
-    public void deliveryCompleted(Long id, MultipartFile image) {
-        validateImageFile(image);
-        String imageUrl = s3Repository.upload(image);
+    public void deliveryCompleted(Long id) {
         callRepository.findById(id)
                 .map(call -> {
                     if (call.getState() == State.DELIVERY) {
-                        call.setDeliveryImage(imageUrl);
                         call.setState(State.COMPLETE);
                         return call;
                     }
