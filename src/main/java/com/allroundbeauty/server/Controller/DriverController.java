@@ -4,12 +4,10 @@ import com.allroundbeauty.server.dto.CallDTO;
 import com.allroundbeauty.server.dto.CallDetailDTO;
 import com.allroundbeauty.server.dto.DriverAcceptRequestDTO;
 import com.allroundbeauty.server.dto.DriverAcceptResponseDTO;
-import com.allroundbeauty.server.exception.BadRequestException;
 import com.allroundbeauty.server.service.CallService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -41,11 +39,8 @@ public class DriverController {
     }
 
     @PostMapping("/api/call/complete/{id}")
-    private void deliveryCompleted(@PathVariable("id") Long id, @RequestPart(value = "image", required = false) MultipartFile image) {
-        if (image == null) {
-            throw new BadRequestException("이미지 파일이 없습니다.");
-        }
-        callService.deliveryCompleted(id, image);
+    private void deliveryCompleted(@PathVariable("id") Long id) {
+        callService.deliveryCompleted(id);
     }
 }
 
