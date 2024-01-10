@@ -15,6 +15,8 @@ Softee5 워밍업 프로젝트 8방미인팀 Backend</h1>
 ## 프로젝트 소개
 
 5일동안 진행된 소프티5 워밍업 프로젝트로 택시기사가 손님이 없는 시간을 활용할 수 있는 사이드업 이라는 대주제로 시작하여 택시 인프라를 활용하여 여행 중 짐을 숙박시설로 옮겨주는 서비스를 제작하였습니다.
+> **Hoxi-Android-Repository**<br>
+> [Link](https://github.com/softeerbootcamp-3nd/softee5-Hoxi-Android)
 
 ## 실행 이미지
 
@@ -66,6 +68,6 @@ type : commit message
 
 |                             김지훈                             |                              이준현                              |                              이상민                              |                                                          소혜린                                                          |                                                          김미로                                                          |                                    
 |:-----------------------------------------------------------:|:-------------------------------------------------------------:|:-------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------:|
-| <img width="160px" src="https://github.com/jomulagy.png" /> | <img width="160px" src="https://github.com/dlwnsgus07.png" /> | <img width="160px" src="https://github.com/StrangeMin.png" /> | <img width="160px" src="https://github.com/dlwnsgus07/school/assets/37991960/bb22daf5-06da-4975-aac4-ebdb58a22cd1" /> | <img width="160px" src="https://github.com/dlwnsgus07/school/assets/37991960/3a12c2a7-3d85-4d10-9f75-f18c91f0745d" /> |
-|          [@jomulagy](https://github.com/jomulagy)           |         [@dlwnsgus07](https://github.com/dlwnsgus07)          |         [@StrangeMin](https://github.com/StrangeMin)          |                                                      [@desinger]                                                      |                                                   [@ProductManager]                                                   | 
+| <img width="160px" src="https://github.com/jomulagy.png" /> | <img width="160px" src="https://github.com/dlwnsgus07.png" /> | <img width="160px" src="https://github.com/StrangeMin.png" /> | <img width="160px" src="https://github.com/dlwnsgus07/school/assets/37991960/3a12c2a7-3d85-4d10-9f75-f18c91f0745d" /> | <img width="160px" src="https://github.com/dlwnsgus07/school/assets/37991960/bb22daf5-06da-4975-aac4-ebdb58a22cd1" /> |
+|          [@jomulagy](https://github.com/jomulagy)           |         [@dlwnsgus07](https://github.com/dlwnsgus07)          |         [@StrangeMin](https://github.com/StrangeMin)          |                                                     [@desinger]()                                                     |                                                  [@ProductManager]()                                                  | 
 |                             백앤드                             |                              백앤드                              |                             안드로이드                             |                                                         디자이너                                                          |                                                          기획자                                                          |
