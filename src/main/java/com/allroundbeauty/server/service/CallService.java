@@ -36,9 +36,14 @@ public class CallService {
     private final DriverRepository driverRepository;
 
     public Long findDriverIdByCallId(Long callId) {
-        return callRepository.findById(callId)
-                .orElseThrow(() -> new BadRequestException("Bad Request"))
-                .getDriver().getId();
+        Driver driver = callRepository.findById(callId).orElseThrow(() -> new BadRequestException("Bad Request")).getDriver();
+        if (driver !=null){
+            return driver.getId();
+        }
+        else{
+            throw new NotAcceptedException("아직 배차되지 않은 콜입니다.");
+        }
+
     }
 
     public DriverPositionDto findDriverPosition(Long id) {
