@@ -40,9 +40,15 @@ public class Call {
     @OneToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    private boolean isCargo;
+
+    @Builder.Default
+    private boolean isCargo = false;
     @Column(nullable = true)
     private Double position_x;
     @Column(nullable = true)
     private Double position_y;
+
+    public Boolean getIsCargo(){
+        return this.isCargo;
+    }
 }

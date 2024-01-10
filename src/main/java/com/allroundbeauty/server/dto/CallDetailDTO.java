@@ -14,7 +14,7 @@ public class CallDetailDTO {
     private String requirement;
     private double distance;
     private String arrivalTime;
-    private int carrier;
+    private int carrierNum;
     @JsonProperty(value = "isCargo")
     private boolean isCargo;
     private int deliveryFee;

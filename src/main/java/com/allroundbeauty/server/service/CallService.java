@@ -100,9 +100,10 @@ public class CallService {
                     callDTO.setSource(call.getSource());
                     callDTO.setDestination(call.getDestination());
                     callDTO.setDistance(call.getDistance());
-                    callDTO.setCarrier(call.getCarrierNum());
+                    callDTO.setCarrierNum(call.getCarrierNum());
                     callDTO.setDeliveryFee(call.getDeliveryFee());
                     callDTO.setArrivalTime(convertArrivalTime(call.getArrivalTime()));
+                    callDTO.setIsCargo(call.getIsCargo());
                     return callDTO;
                 })
                 .toList();
@@ -133,8 +134,8 @@ public class CallService {
                 .requirement(call.getRequirement())
                 .distance(call.getDistance())
                 .arrivalTime(convertArrivalTime(call.getArrivalTime()))
-                .carrier(call.getCarrierNum())
-                .isCargo(call.isCargo())
+                .carrierNum(call.getCarrierNum())
+                .isCargo(call.getIsCargo())
                 .deliveryFee(call.getDeliveryFee())
                 .build();
     }

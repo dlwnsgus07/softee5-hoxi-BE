@@ -13,6 +13,7 @@ public class CallDTO {
     private String destination;
     private double distance;
     private String arrivalTime;
-    private int carrier;
+    private int carrierNum;
     private int deliveryFee;
+    private Boolean isCargo;
 }
